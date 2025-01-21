@@ -15,7 +15,7 @@ import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers import config_validation as cv
-from homeassistant.const import (CONF_NAME, TEMP_CELSIUS)
+from homeassistant.const import (CONF_NAME)
 
 _LOGGER = logging.getLogger(__name__)
 _INTERVAL = 15
@@ -74,7 +74,13 @@ class ApparentTSensor(Entity):
         self._temperatureSensor = temperatureSensor
         self._humiditySensor = humiditySensor
         self._apparent_temperature = 0
+        self._unique_id = f"{temperature_sensor}_{humidity_sensor}"  # 添加 unique_id
 
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return self._unique_id
+        
     @property
     def name(self):
         """Return the name of the sensor."""
@@ -83,7 +89,7 @@ class ApparentTSensor(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit the value is expressed in."""
-        return TEMP_CELSIUS
+        return '°C'
 
     @property
     def available(self):
