@@ -137,7 +137,7 @@ https://home-assistant.io/components/sensor.aircat/
 import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import CONF_NAME, CONF_MAC, CONF_SENSORS, TEMP_CELSIUS
+from homeassistant.const import CONF_NAME, CONF_MAC, CONF_SENSORS
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers import config_validation as cv
 
@@ -155,7 +155,7 @@ DEFAULT_SENSORS = [SENSOR_PM25, SENSOR_HCHO,
 SENSOR_MAP = {
     SENSOR_PM25: ('PM2.5', 'μg/m³', 'blur'),
     SENSOR_HCHO: ('HCHO', 'mg/m³', 'biohazard'),
-    SENSOR_TEMPERATURE: ('Temperature', TEMP_CELSIUS, 'thermometer'),
+    SENSOR_TEMPERATURE: ('Temperature', '°C', 'thermometer'),
     SENSOR_HUMIDITY: ('Humidity', '%', 'water-percent')
 }
 
@@ -210,6 +210,12 @@ class AirCatSensor(Entity):
         self._unit = unit
         self._icon = 'mdi:' + icon
         self._aircat = aircat
+        self._unique_id = f"{mac}_{sensor_type}"  # 添加 unique_id
+
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return self._unique_id
 
     @property
     def name(self):
