@@ -74,7 +74,7 @@ class ApparentTSensor(Entity):
         self._temperatureSensor = temperatureSensor
         self._humiditySensor = humiditySensor
         self._apparent_temperature = 0
-        self._unique_id = f"{temperature_sensor}_{humidity_sensor}"  # 添加 unique_id
+        self._unique_id = f"{temperaturesensor}_{humiditysensor}"  # 添加 unique_id
 
     @property
     def unique_id(self):
